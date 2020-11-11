@@ -10,7 +10,7 @@ public class IndexController {
 
     @RequestMapping("/china")
     public String china(){
-        return "show";
+        return "index";
     }
 
     @RequestMapping("page/toLogin")
