@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/dist/css/bootstrap.css}">
+    <script th:src="@{/webjars/jquery/3.5.1/dist/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/bootstrap-paginator.js"></script>
+    <title>主页</title>
+</head>
+<body>
+
+
+<title>广告列表</title>
+<div id="app" class="container">
+    <form action="" id="list_form">
+        <div class="form-group">
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="title" v-model="title" placeholder="请输入广告名称">
+            </div>
+        </div>
+        <button type="button" class="btn btn-default" onclick="findProductPage()">搜索</button>
+    </form>
+    <br>
+    <br>
+    <!--工具栏-->
+    <div class="pull-left">
+        <div class="form-group form-inline">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" v-on:click="brand = {}"><i class="fa fa-file-o"></i> 新建</button>
+                <button type="button" class="btn btn-default" title="删除" v-on:click="deleteByIds()"><i class="fa fa-trash-o"></i> 删除</button>
+                <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <th>序号</th>
+            <th>广告名称</th>
+            <th>地址</th>
+            <th>所属分类</th>
+            <th>添加日期</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for="tcarouse in seoList">
+            <td><input  type="checkbox" v-on:click="updateSelection($event, tcarouse.siid)"></td>
+            <td>{{tcarouse.title}}</td>
+            <td>{{tcarouse.url}}</td>
+            <td>{{tcarouse.yewu}}</td>
+            <td>{{tcarouse.yewu2}}</td>
+            <td><!--{{tcarouse.status}}-->
+                <span v-if="tcarouse.status === 1">启用</span>
+                <span v-else-if="tcarouse.status === 0">禁用</span>
+            </td>
+            <td class="text-center">
+                <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" v-on:click="findOne(tcarouse.siid)">修改</button>
+            </td>
+        </tr>
+    </table>
+    <div id="example" style="text-align: right"><ul id="pageLimit"></ul></div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">tcarouse</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped"  width="800px">
+                        <tr>
+                            <td>广告名称</td>
+                            <td><input  class="form-control" placeholder="广告名称" v-model="tcarouse.title">  </td>
+                        </tr>
+                        <tr>
+                            <td>地址</td>
+                            <td><input  class="form-control" placeholder="地址" v-model="tcarouse.url">  </td>
+                        </tr>
+                        <tr>
+                            <td>所属分类</td>
+                            <td>
+                         <select class="selectpicker form-control" data-live-search="true" v-model="adid" id="addid">
+                          </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>状态</td>
+                        <td>
+                            <input type="radio" id="ok" value="1" v-model="tcarouse.status">
+                            <label for="ok">启用</label>
+                            <input type="radio" id="no" value="2" v-model="tcarouse.status">
+                            <label for="no">禁用</label>
+                        </td>
+                        </tr>
+                       <!-- <input type="hidden" v-model="seo.id">-->
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" v-on:click="saveBrand()">保存</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            seoList:"",
+            totalPage:"",
+            total:"",
+            currPage:"",
+            pageSize:"",
+            title:"",
+            tcarouse:{
+                siid:'',
+                title:'',
+                url:'',
+                adid:'',
+                status:''
+            },
+            /*   selectIds: ''*/
+        }
+    })
+
+    $(function() {
+        findProductPage();
+        showSel();
+    })
+    function findProductPage(){
+        $.ajax({
+            type:"post",
+            url:"chaxun",
+            data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"title":vm.title},
+            dataType:"json",
+            success: function(result) {
+                vm.seoList = result.rows;
+                vm.totalPage = result.totalPage;
+                vm.total = result.total;
+                vm.currPage = result.currPage;
+                vm.pageSize = result.pageSize;
+                setPage(result.currPage,result.totalPage,result.pageSize,findProductPage);
+            },
+            error : function() {
+                alert("系统错误，请联系管理员！");
+            }
+        })
+    }
+    function setPage(pageCurrent, pageSum, pageSize, callback) {
+        $('#pageLimit').bootstrapPaginator({
+            currentPage: pageCurrent,//当前的请求页面。
+            totalPages: pageSum,//一共多少页。
+            size:"normal",//应该是页眉的大小。
+            bootstrapMajorVersion: 3,//bootstrap的版本要求。
+            alignment:"right",
+            numberOfPages:pageSize,//一页列出多少数据。
+            itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                switch (type) {
+                    case "first": return "首页";
+                    case "prev": return "上一页";
+                    case "next": return "下一页";
+                    case "last": return "末页";
+                    case "page": return page;
+                }
+            },
+            //当单击操作按钮的时候, 执行该函数, 调用ajax渲染页面
+            onPageClicked: function (event,originalEvent,type,page) {
+                // 把当前点击的页码赋值给currentPage, 调用ajax,渲染页面
+                vm.currPage = page;
+                callback && callback()
+            }
+        });
+
+
+    }
+
+    function showSel(){
+        $.ajax({
+            "type" : 'get',
+            "url": "liebiao",
+            "dataType" : "json",
+            "success" : function(data) {
+
+                var opts = "";
+                for( var i = 0 ; i < data.length; i++ ){
+
+                    opts += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                }
+// 查询界面
+                $("#addid").append(opts);
+
+            }
+        });
+    }
+    //保存
+    function saveBrand() {
+
+        $.ajax({
+            type: 'post',
+            url: "xin",
+            data: vm.tcarouse,
+            dataType: 'json',
+
+
+            success: function (result) {
+                if (result.success) {
+                    alert(result.message);
+                    findProductPage();
+                } else {
+                    alert(result.message);
+                }
+            },
+
+        })
+    }
+
+    /*
+        vm.selectIds = [];
+        //复选框选中
+        function updateSelection($event, id) {
+            if ($event.target.checked) {
+                vm.selectIds.push(id);
+            } else {
+                var idx = vm.selectIds.indexOf(id);
+                vm.selectIds.splice(idx, 1);//删除
+            }
+
+            console.info(vm.selectIds.toString());
+        }
+
+        //删除
+        function deleteByIds() {
+            $.ajax({
+                type:'post',
+                url:'del',
+                data:{'id': vm.selectIds.toString()},
+                dataType:'json',
+                success:function (result) {
+                    if (result.success) {
+                        alert(result.message);
+                        findProductPage();
+                        $("input[type='checkbox']").prop("checked", false);
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function (result) {
+
+                }
+            })
+        }
+
+        //修改回显
+        function findOne(id) {
+            $.ajax({
+                type:'post',
+                url:'huixian',
+                data:{'id': id},
+                dataType: 'json',
+                success: function (result) {
+                    vm.seo = result;
+                },
+
+            })
+        }*/
+
+</script>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 声明：1、约束  2、提示 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 根元素 -->
+<!-- namespace ：命名空间    配置当前mapper文件跟哪个dao接口对应-->
+<mapper namespace="com.jk.mapper.TcarMapper">
+    <!--广告列表-->
+    <!-- 总条数 -->
+    <select id="findTotal" resultType="java.lang.Long">
+        select count(*) from t_carouse t left join adposition x on t.ad_id=x.id
+        <where>
+            <if test="tcarouse.title != null and tcarouse.title != ''">
+                t.title like concat('%','${tcarouse.title}','%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 分页 -->
+    <select id="findPage" resultType="Tcarouse">
+        <bind name="key_off" value="(currPage - 1)*pageSize"/>
+        select t.*,x.name yewu,x.createdDate yewu2 from t_carouse t left join adposition x on t.ad_id=x.id
+        <where>
+            <if test="tcarouse.title != null and tcarouse.title != ''">
+                t.title like concat('%','${tcarouse.title}','%')
+            </if>
+        </where>
+        limit ${key_off},${pageSize}
+    </select>
+
+    <!--查询广告类型表-->
+    <select id="danbiao" resultType="Adposition">
+         select * from adposition
+    </select>
+
+    <insert id="add" parameterType="Tcarouse" >
+        insert into t_carouse(title,url,ad_id,status) values(#{title},#{url},#{adid},#{status})
+     </insert>
+
+    <!--广告表查询-->
+    <select id="guang" resultType="Tcarouse">
+         select t.*,x.name yewu,x.createdDate yewu2 from t_carouse t left join adposition x on t.ad_id=x.id
+        <where>
+            <if test="tcarouse.title != null and tcarouse.title != ''">
+                t.title like concat('%','${tcarouse.title}','%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="del">
+        delete from t_carouse where si_id=#{siid}
+    </delete>
+
+    <select id="huixian" parameterType="int" resultType="Tcarouse">
+          select * from t_carouse where si_id=#{siid}
+    </select>
+
+    <update id="update">
+         update t_carouse set title=#{title},url=#{url},ad_id=#{adid},status=#{status} where si_id = #{siid}
+    </update>
+
+
+</mapper>
