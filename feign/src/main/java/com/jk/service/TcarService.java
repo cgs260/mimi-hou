@@ -36,4 +36,20 @@ public interface TcarService {
 
     @RequestMapping("/huixian")
     public Tcarouse huixian(@RequestParam Integer siid);
+
+
+
+
+    //广告分类表查询
+    @RequestMapping("/gtype")
+    public List<Adposition> gtype(@RequestBody Adposition adposition);
+
+    @RequestMapping("/gadd")
+    public void gadd(@RequestBody Adposition adposition);
+
+    @RequestMapping("gdelete")
+    public void gdelete(@RequestParam Integer id);
+
+    @RequestMapping("/ghuixian")
+    public Adposition ghuixian(@RequestParam Integer id);
 }

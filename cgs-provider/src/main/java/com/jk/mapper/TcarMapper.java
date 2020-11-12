@@ -26,4 +26,19 @@ public interface TcarMapper {
     Tcarouse huixian(Integer siid);
 
     void update(Tcarouse tcarouse);
+
+
+
+
+
+    //广告分类表查询
+    List<Adposition> gtype(@Param("adposition")Adposition adposition);
+
+    void gadd(Adposition adposition);
+
+    void gdelete(Integer id);
+
+    Adposition ghuixian(Integer id);
+
+    void gupdate(Adposition adposition);
 }

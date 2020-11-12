@@ -59,4 +59,32 @@ public class TcarServicelmpl implements TcarService{
     }
 
 
+
+
+
+    //广告分类表查询
+    @Override
+    public List<Adposition> gtype(Adposition adposition) {
+        return tcarMapper.gtype(adposition);
+    }
+
+    @Override
+    public void gadd(Adposition adposition) {
+        if(adposition.getId()==null){
+            tcarMapper.gadd(adposition);
+        }
+        tcarMapper.gupdate(adposition);
+    }
+
+    @Override
+    public void gdelete(Integer id) {
+        tcarMapper.gdelete(id);
+    }
+
+    @Override
+    public Adposition ghuixian(Integer id) {
+        return tcarMapper.ghuixian(id);
+    }
+
+
 }

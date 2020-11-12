@@ -59,4 +59,34 @@
     </update>
 
 
+
+
+    <!--广告分类表查询-->
+    <select id="gtype" resultType="Adposition">
+        select * from adposition
+        <where>
+            <if test="adposition.name != null and adposition.name != ''">
+                name like concat('%','${adposition.name}','%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="gadd" parameterType="Adposition" >
+        insert into adposition(name,description,createdDate) values(#{name},#{description},CURDATE())
+    </insert>
+
+    <delete id="gdelete">
+        delete from adposition where id=#{id}
+    </delete>
+
+    <select id="ghuixian" parameterType="int" resultType="Adposition">
+          select * from adposition where id=#{id}
+    </select>
+
+    <update id="gupdate">
+         update adposition set name=#{name},description=#{description} where id = #{id}
+    </update>
+
+
+
 </mapper>

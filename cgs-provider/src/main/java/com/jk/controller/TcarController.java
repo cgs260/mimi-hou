@@ -5,10 +5,7 @@ import com.jk.entity.Adposition;
 import com.jk.entity.Tcarouse;
 import com.jk.pojo.PageResult;
 import com.jk.service.TcarService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -50,4 +47,31 @@ public class TcarController {
      public Tcarouse huixian(@RequestParam Integer siid){
           return tcarService.huixian(siid);
      }
+
+
+
+     //广告分类表查询
+     @RequestMapping("/gtype")
+     public List<Adposition> gtype(@RequestBody Adposition adposition){
+          return tcarService.gtype(adposition);
+     }
+
+     @RequestMapping("/gadd")
+     public void gadd(@RequestBody Adposition adposition){
+          tcarService.gadd(adposition);
+     }
+
+     @RequestMapping("gdelete")
+     public void gdelete(@RequestParam Integer id){
+          tcarService.gdelete(id);
+     }
+
+     @RequestMapping("/ghuixian")
+     public Adposition ghuixian(@RequestParam Integer id){
+          return tcarService.ghuixian(id);
+     }
+
+
+
+
 }

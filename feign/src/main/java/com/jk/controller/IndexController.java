@@ -29,5 +29,10 @@ public class IndexController {
         return "cgs/china";
     }
 
+    @RequestMapping("fenlei")
+    @RequiresPermissions("fei:query")
+    public String fenlei(){
+        return  "cgs/fenlei";
+    }
 
 }

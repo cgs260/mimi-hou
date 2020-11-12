@@ -19,4 +19,15 @@ public interface TcarService {
     void del(Integer siid);
 
     Tcarouse huixian(Integer siid);
+
+
+
+    //广告分类表查询
+    List<Adposition> gtype(Adposition adposition);
+
+    void gadd(Adposition adposition);
+
+    void gdelete(Integer id);
+
+    Adposition ghuixian(Integer id);
 }

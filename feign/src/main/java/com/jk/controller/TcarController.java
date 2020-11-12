@@ -60,5 +60,30 @@ public class TcarController {
 
 
 
+    //广告分类表查询
+    @RequestMapping("/ww")
+    @RequiresPermissions("fei:query")
+    public List<Adposition> gtype(Adposition adposition){
+        return tcarService.gtype(adposition);
+    }
+
+    @RequestMapping("/wadd")
+    @RequiresPermissions("fei:save")
+    public void gadd(Adposition adposition){
+        tcarService.gadd(adposition);
+    }
+
+    @RequestMapping("wdelete")
+    @RequiresPermissions("fei:delete")
+    public void gdelete(Integer id){
+        tcarService.gdelete(id);
+    }
+
+    @RequestMapping("/whuixian")
+    @RequiresPermissions("fei:update")
+    public Adposition ghuixian(Integer id){
+        return tcarService.ghuixian(id);
+    }
+
 
 }
