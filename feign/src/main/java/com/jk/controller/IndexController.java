@@ -29,5 +29,14 @@ public class IndexController {
         return "cgs/china";
     }
 
+    @RequestMapping("/goods/order")
+    public String order(){
+        return "order/orderList";
+    }
+
+    @RequestMapping("order/toSaveOrder")
+    public String toSaveOrder(){
+        return "order/saveOrder";
+    }
 
 }
