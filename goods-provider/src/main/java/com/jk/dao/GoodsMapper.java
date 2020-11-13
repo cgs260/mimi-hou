@@ -35,4 +35,6 @@ public interface GoodsMapper {
     Goods findGoodsOne(Integer id);
 
     void saveGoodsSpecs(@Param("goodsSpecs") GoodsSpecs goodsSpecs,@Param("id") Integer id);
+
+    List<Goods> highcharts();
 }

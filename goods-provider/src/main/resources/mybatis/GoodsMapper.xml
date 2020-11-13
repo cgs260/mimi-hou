@@ -365,4 +365,8 @@
     </set>
     where goodspu_id = #{id}
   </update>-->
+
+  <select id="highcharts" resultType="Goods">
+    select name as title,(sum(sale)/(select sum(sale) from goods_spu)*100)as rate from goods_spu s,goods_category c where s.category_id=c.id group by name
+  </select>
 </mapper>

@@ -39,4 +39,9 @@ public class IndexController {
         return "order/saveOrder";
     }
 
+    @RequestMapping("highcharts")
+    public String highcharts(){
+        return "highcharts";
+    }
+
 }

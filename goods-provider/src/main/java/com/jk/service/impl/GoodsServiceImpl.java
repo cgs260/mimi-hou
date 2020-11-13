@@ -130,5 +130,10 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public List<Goods> highcharts() {
+        return goodsMapper.highcharts();
+    }
+
 
 }

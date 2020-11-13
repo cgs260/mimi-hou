@@ -33,4 +33,6 @@ public interface GoodsService {
     Order findOrderById(Integer id);
 
     void saveOrder(Order order);
+
+    List<Goods> highcharts();
 }

@@ -75,4 +75,9 @@ public class GoodsController {
     public void saveOrder(@RequestBody Order order){
         goodsService.saveOrder(order);
     }
+
+    @RequestMapping("highcharts")
+    public List<Goods> highcharts(){
+        return goodsService.highcharts();
+    }
 }

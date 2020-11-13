@@ -127,4 +127,10 @@ public class GoodsController {
         goodsService.saveOrder(order);
     }
 
+    @RequestMapping("highcharts")
+    @ResponseBody
+    public List<Goods> highcharts(){
+        return goodsService.highcharts();
+    }
+
 }

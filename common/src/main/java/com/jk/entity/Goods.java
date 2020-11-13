@@ -37,5 +37,7 @@ public class Goods {
 
     private GoodsSpecs goodsSpecs;
 
+    private Double rate;
+
 
 }

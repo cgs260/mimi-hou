@@ -48,4 +48,7 @@ public interface GoodsService {
 
     @RequestMapping("goods/saveOrder")
     public void saveOrder(@RequestBody Order order);
+
+    @RequestMapping("goods/highcharts")
+    public List<Goods> highcharts();
 }
