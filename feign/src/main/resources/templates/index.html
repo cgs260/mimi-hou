@@ -3,12 +3,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here</title>
+    <script src="../js/js/jquery-1.9.1.min.js"></script>
+
+
     <!-- 引入bootstap的css文件 -->
     <link rel="stylesheet" href="../js/js/bootstrap3/css/bootstrap.css">
     <link rel="stylesheet" href="../js/js/bootstrap3/css/bootstrap-theme.css">
 
     <!-- 引入jquery文件 -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
 
     <!-- 引入树插件的css和js文件 -->
     <link rel="stylesheet" href="../js/js/bootstrap-treeview/bootstrap-treeview.min.css">
@@ -17,6 +23,7 @@
     <!-- 引入选项卡插件的css和js文件 -->
     <link rel="stylesheet" href="../js/js/bootStrap-addTabs/bootstrap.addtabs.css">
     <script src="../js/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+
 </head>
 <body>
 <!-- 导航栏 -->
@@ -56,23 +63,20 @@
                 </ul>
 
                 <!-- 选项卡下内容 -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="home">
+               <div class="tab-content">
+                   <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
 
-                        <h4>欢迎来到TOM秀空间！！</h4>
-                        <h4>请尽情展示你的才艺</h4>
-                        <h4>让世界看到你</h4>
-
-                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
-    $(function(){
+   $(function(){
         initTree();//初始化加载树
+
     })
 
     //初始化加载树
@@ -97,5 +101,64 @@
             }
         });
     }
+   $.ajax({
+        url:"../goods/highcharts",
+        success:function(result){
+            $(document).ready(function() {
+                var chart = {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                };
+                var title = {
+                    text: '各类型商品销量所占比例'
+                };
+                var tooltip = {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                };
+                var plotOptions = {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                };
+                var str=[];
+
+                var arr=[];
+                var aa=result.length
+
+                for (var i=0;i<result.length;i++){
+                    arr[i] = new Array();
+                    for(var j=0; arr[i]<2;j++) {
+                        arr[i][0] = result[i].title;
+                        arr[i][1] = result[i].rate;
+                    }
+
+
+                };
+                alert(arr);
+                var series= [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data:arr
+                }];
+
+                var json = {};
+                json.chart = chart;
+                json.title = title;
+                json.tooltip = tooltip;
+                json.series = series;
+                json.plotOptions = plotOptions;
+                $('#container').highcharts(json);
+            });
+        }
+    })
 </script>
 </html>
