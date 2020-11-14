@@ -29,10 +29,26 @@ public class IndexController {
         return "cgs/china";
     }
 
+
     @RequestMapping("fenlei")
     @RequiresPermissions("fei:query")
-    public String fenlei(){
-        return  "cgs/fenlei";
+    public String fenlei() {
+        return "cgs/fenlei";
+    }
+    @RequestMapping("/goods/order")
+    public String order(){
+        return "order/orderList";
+    }
+
+    @RequestMapping("order/toSaveOrder")
+    public String toSaveOrder(){
+        return "order/saveOrder";
+    }
+
+    @RequestMapping("highcharts")
+    public String highcharts(){
+        return "highcharts";
+
     }
 
 }

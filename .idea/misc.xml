@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/feign/pom.xml" />
         <option value="$PROJECT_DIR$/cgs-provider/pom.xml" />
         <option value="$PROJECT_DIR$/goods-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
       </list>
     </option>
   </component>
