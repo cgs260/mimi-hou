@@ -57,6 +57,10 @@ public class GoodsController {
         return goodsService.findGoodsOne(id);
     }
 
+    @RequestMapping("deleteGoods")
+    public void deleteGoods(@RequestParam Integer id){
+        goodsService.deleteGoods(id);
+    }
     @RequestMapping("findOrder")
     public List<Order> findOrder(@RequestBody Order order){
         return goodsService.findOrder(order);
@@ -79,5 +83,10 @@ public class GoodsController {
     @RequestMapping("highcharts")
     public List<Goods> highcharts(){
         return goodsService.highcharts();
+    }
+
+    @RequestMapping("changeOrderStatus")
+    public void changeOrderStatus(@RequestParam Integer id){
+        goodsService.changeOrderStatus(id);
     }
 }

@@ -101,7 +101,15 @@
                     }},*/
                 {field:'ordernum',title:'订单编号',align:'center',width:80},
                 {field:'ordersumprice',title:'订单总价',align:'center',width:80},
-                {field:'orderstatus',title:'状态',align:'center',width:80},
+                {field:'orderstatus',title:'状态',align:'center',width:80,formatter:function(value,rows,index){
+                    if(value==2){
+                        return "待发货";
+                    }else if(value==3){
+                        return "已发货";
+                    }else if(value==4){
+                        return "已签收";
+                    }
+                    }},
                 {field:'receivingaddress',title:'收货地址',align:'center',width:80},
                 /*{field:'areaname',title:'地区',align:'center',width:80,formatter:function(value,rows,index){
                         return rows.shengname+"-"+rows.shiname;
@@ -120,6 +128,7 @@
                         var str = "";
                         str+="<input class='btn btn-danger' type='submit' value='删除' onclick='delMovieById("+rows.id+")'>";
                         str+="<input class='btn btn-success' type='submit' value='修改' onclick='findMovieById("+rows.id+")'>";
+                        str+="<input class='btn btn-danger' type='sunmit' value='发货' onclick='changeStatus("+rows.id+")'>";
                         return str;
                     }},
             ]
@@ -136,6 +145,16 @@
                 searchMovie()
             }
         });
+    }
+
+    function changeStatus(id){
+        $.ajax({
+            url:'../goods/changeOrderStatus',
+            data:{id:id},
+            success:function(){
+                searchMovie();
+            }
+        })
     }
 
     //批量删除

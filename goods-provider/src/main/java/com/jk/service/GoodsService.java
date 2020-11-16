@@ -35,4 +35,8 @@ public interface GoodsService {
     void saveOrder(Order order);
 
     List<Goods> highcharts();
+
+    void changeOrderStatus(Integer id);
+
+    void deleteGoods(Integer id);
 }

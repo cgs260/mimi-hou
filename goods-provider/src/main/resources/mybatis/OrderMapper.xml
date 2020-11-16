@@ -248,4 +248,8 @@
   <select id="findOrder" resultType="Order">
     select * from mi_order
   </select>
+
+  <update id="changeOrderStatus">
+    update mi_order set orderstatus=3 where id=#{id}
+  </update>
 </mapper>

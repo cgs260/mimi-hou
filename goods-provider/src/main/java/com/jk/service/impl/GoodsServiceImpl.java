@@ -135,5 +135,15 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsMapper.highcharts();
     }
 
+    @Override
+    public void changeOrderStatus(Integer id) {
+        orderMapper.changeOrderStatus(id);
+    }
+
+    @Override
+    public void deleteGoods(Integer id) {
+        goodsMapper.deleteByPrimaryKey(id);
+    }
+
 
 }

@@ -24,7 +24,7 @@ public class GoodsController {
     private GoodsService goodsService;
     @RequestMapping("category")
     public String category(){
-        return "goods/category";
+        return "goods/categoryList";
     }
     @RequestMapping("findCategory")
     @ResponseBody
@@ -104,6 +104,12 @@ public class GoodsController {
         return goodsService.findGoodsOne(id);
     }
 
+    @RequestMapping("deleteGoods")
+    @ResponseBody
+    public void deleteGoods(Integer id){
+        goodsService.deleteGoods(id);
+    }
+
     @RequestMapping("findOrder")
     @ResponseBody
     public List<Order> findOrder(Order order){
@@ -133,4 +139,9 @@ public class GoodsController {
         return goodsService.highcharts();
     }
 
+    @RequestMapping("changeOrderStatus")
+    @ResponseBody
+    public void changeOrderStatus(Integer id){
+        goodsService.changeOrderStatus(id);
+    }
 }

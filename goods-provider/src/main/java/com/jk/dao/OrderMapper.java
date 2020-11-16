@@ -19,4 +19,6 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     List<Order> findOrder(Order order);
+
+    void changeOrderStatus(Integer id);
 }
