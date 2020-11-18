@@ -2,6 +2,8 @@ package com.jk.mapper;
 
 
 import com.jk.entity.Adposition;
+import com.jk.entity.Goods;
+import com.jk.entity.Order;
 import com.jk.entity.Tcarouse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -41,4 +43,12 @@ public interface TcarMapper {
     Adposition ghuixian(Integer id);
 
     void gupdate(Adposition adposition);
+
+
+    //查询订单号所对应的商品
+    List<Order> findorder(@Param("order") Order order);
+    //查询商品表
+    List<Goods> findgoods();
+    //商品表回显
+    Goods goodshui(Integer id);
 }

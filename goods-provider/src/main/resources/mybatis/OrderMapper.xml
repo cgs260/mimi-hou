@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="orderNum" property="ordernum" jdbcType="VARCHAR" />
+    <result column="shopid" property="shopid" jdbcType="INTEGER" />
+    <result column="shopName" property="shopname" jdbcType="VARCHAR" />
+    <result column="orderSumPrice" property="ordersumprice" jdbcType="DECIMAL" />
+    <result column="orderStatus" property="orderstatus" jdbcType="INTEGER" />
+    <result column="addressid" property="addressid" jdbcType="INTEGER" />
+    <result column="receivingAddress" property="receivingaddress" jdbcType="VARCHAR" />
+    <result column="receivingTelephone" property="receivingtelephone" jdbcType="VARCHAR" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="DATE" />
+    <result column="serialNumber" property="serialnumber" jdbcType="VARCHAR" />
+    <result column="payType" property="paytype" jdbcType="VARCHAR" />
+    <result column="paymentTime" property="paymenttime" jdbcType="DATE" />
+    <result column="waybiiNumber" property="waybiinumber" jdbcType="VARCHAR" />
+    <result column="sendTime" property="sendtime" jdbcType="DATE" />
+    <result column="closingTime" property="closingtime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userid, orderNum, shopid, shopName, orderSumPrice, orderStatus, addressid, receivingAddress, 
+    receivingTelephone, consignee, createTime, serialNumber, payType, paymentTime, waybiiNumber, 
+    sendTime, closingTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mi_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mi_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.Order" >
+    insert into order (id, userid, orderNum, 
+      shopid, shopName, orderSumPrice, 
+      orderStatus, addressid, receivingAddress, 
+      receivingTelephone, consignee, createTime, 
+      serialNumber, payType, paymentTime, 
+      waybiiNumber, sendTime, closingTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{ordernum,jdbcType=VARCHAR}, 
+      #{shopid,jdbcType=INTEGER}, #{shopname,jdbcType=VARCHAR}, #{ordersumprice,jdbcType=DECIMAL}, 
+      #{orderstatus,jdbcType=INTEGER}, #{addressid,jdbcType=INTEGER}, #{receivingaddress,jdbcType=VARCHAR}, 
+      #{receivingtelephone,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, 
+      #{serialnumber,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR}, #{paymenttime,jdbcType=DATE}, 
+      #{waybiinumber,jdbcType=VARCHAR}, #{sendtime,jdbcType=DATE}, #{closingtime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.Order" >
+    insert into mi_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="ordernum != null" >
+        orderNum,
+      </if>
+      <if test="shopid != null" >
+        shopid,
+      </if>
+      <if test="shopname != null" >
+        shopName,
+      </if>
+      <if test="ordersumprice != null" >
+        orderSumPrice,
+      </if>
+      <if test="orderstatus != null" >
+        orderStatus,
+      </if>
+      <if test="addressid != null" >
+        addressid,
+      </if>
+      <if test="receivingaddress != null" >
+        receivingAddress,
+      </if>
+      <if test="receivingtelephone != null" >
+        receivingTelephone,
+      </if>
+      <if test="consignee != null" >
+        consignee,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="serialnumber != null" >
+        serialNumber,
+      </if>
+      <if test="paytype != null" >
+        payType,
+      </if>
+      <if test="paymenttime != null" >
+        paymentTime,
+      </if>
+      <if test="waybiinumber != null" >
+        waybiiNumber,
+      </if>
+      <if test="sendtime != null" >
+        sendTime,
+      </if>
+      <if test="closingtime != null" >
+        closingTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="ordernum != null" >
+        #{ordernum,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null" >
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null" >
+        #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="ordersumprice != null" >
+        #{ordersumprice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstatus != null" >
+        #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="addressid != null" >
+        #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="receivingaddress != null" >
+        #{receivingaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingtelephone != null" >
+        #{receivingtelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null" >
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="serialnumber != null" >
+        #{serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenttime != null" >
+        #{paymenttime,jdbcType=DATE},
+      </if>
+      <if test="waybiinumber != null" >
+        #{waybiinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=DATE},
+      </if>
+      <if test="closingtime != null" >
+        #{closingtime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.Order" >
+    update mi_order
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="ordernum != null" >
+        orderNum = #{ordernum,jdbcType=VARCHAR},
+      </if>
+      <if test="shopid != null" >
+        shopid = #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null" >
+        shopName = #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="ordersumprice != null" >
+        orderSumPrice = #{ordersumprice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstatus != null" >
+        orderStatus = #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="addressid != null" >
+        addressid = #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="receivingaddress != null" >
+        receivingAddress = #{receivingaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingtelephone != null" >
+        receivingTelephone = #{receivingtelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null" >
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="serialnumber != null" >
+        serialNumber = #{serialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="paytype != null" >
+        payType = #{paytype,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenttime != null" >
+        paymentTime = #{paymenttime,jdbcType=DATE},
+      </if>
+      <if test="waybiinumber != null" >
+        waybiiNumber = #{waybiinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        sendTime = #{sendtime,jdbcType=DATE},
+      </if>
+      <if test="closingtime != null" >
+        closingTime = #{closingtime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.Order" >
+    update mi_order
+    set userid = #{userid,jdbcType=INTEGER},
+      orderNum = #{ordernum,jdbcType=VARCHAR},
+      shopid = #{shopid,jdbcType=INTEGER},
+      shopName = #{shopname,jdbcType=VARCHAR},
+      orderSumPrice = #{ordersumprice,jdbcType=DECIMAL},
+      orderStatus = #{orderstatus,jdbcType=INTEGER},
+      addressid = #{addressid,jdbcType=INTEGER},
+      receivingAddress = #{receivingaddress,jdbcType=VARCHAR},
+      receivingTelephone = #{receivingtelephone,jdbcType=VARCHAR},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=DATE},
+      serialNumber = #{serialnumber,jdbcType=VARCHAR},
+      payType = #{paytype,jdbcType=VARCHAR},
+      paymentTime = #{paymenttime,jdbcType=DATE},
+      waybiiNumber = #{waybiinumber,jdbcType=VARCHAR},
+      sendTime = #{sendtime,jdbcType=DATE},
+      closingTime = #{closingtime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findOrder" resultType="Order">
+    select * from mi_order
+  </select>
+</mapper>

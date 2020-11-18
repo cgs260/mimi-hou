@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>广告分类列表</title>
+    <title>订单列表</title>
     <meta name="keywords" content="keyword1,keyword2,keyword3"></meta>
 
     <meta name="description" content="this is my page"></meta>
@@ -22,10 +22,7 @@
 <div class="pull-left">
     <div class="form-group form-inline">
         <div class="btn-group">
-            <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal"><i
-                    class="fa fa-file-o"></i> 添加分类
-            </button>
-            <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+
             <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                     class="fa fa-refresh"></i> 刷新
             </button>
@@ -35,7 +32,7 @@
 
 <div class="box-tools pull-right">
     <div class="has-feedback">
-        广告分类名称：<input id="name">
+        订单号：<input id="orderNum">
         <button class="btn btn-default" onclick="javascript:cha()">查询</button>
 
     </div>
@@ -52,20 +49,31 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h3 id="myModalLabel">添加广告分类</h3>
+                <h3 id="myModalLabel">商品信息</h3>
             </div>
             <div class="modal-body">
                 <form method="post" id="ff">
                     <input type="hidden" name="id" id="bid">
                     <table class="table table-bordered table-striped" width="800px">
                         <tr>
-                            <td>分类名称</td>
-                            <td><input class="form-control" placeholder="分类名称" name="name" id="qname"></td>
-
+                            <td>商品名称</td>
+                            <td><input class="form-control" placeholder="商品名称" name="title" id="qname"></td>
                         </tr>
                         <tr>
-                            <td>介绍</td>
-                            <td><input class="form-control" placeholder="介绍" name="description" id="memo">
+                            <td>价格</td>
+                            <td><input class="form-control" placeholder="价格" name="price" id="memo">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>数量</td>
+                            <td>
+                                <input class="form-control" placeholder="数量" name="stock" id="stock">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>状态</td>
+                            <td><input class="form-control" placeholder="状态" name="status" id="status">
                             </td>
                         </tr>
 
@@ -73,8 +81,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" onclick="javascript:add()">保存
-                </button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
@@ -92,11 +98,29 @@
     function cha() {
         $("#myTable").bootstrapTable("refresh", {
             query: {
-                name:$("#name").val(),
+                ordernum:$("#orderNum").val(),
             }
         })
     }
-    function add() {
+    function chakan(id) {
+        $.ajax({
+            url: "goodshuix",
+            type: "post",
+            data: {id: id},
+            success: function (data) {
+                console.log(data)
+                $("#bid").val(data.id);
+                $("#qname").val(data.title);
+                $("#memo").val(data.price);
+                $("#stock").val(data.stock);
+                $("#status").val(data.status);
+
+
+            }
+
+        })
+    }
+  /*  function add() {
         $.ajax({
             url: "wadd",
             type: "post",
@@ -118,67 +142,44 @@
             }
         })
     }
-    function xiugai(id) {
-        $.ajax({
-            url: "whuixian",
-            type: "post",
-            data: {id: id},
-            success: function (data) {
-                console.log(data)
-                $("#bid").val(data.id);
-                $("#qname").val(data.name);
-                $("#memo").val(data.description);
+*/
+    /*
 
 
-            }
+       function showSel(){
+           $.ajax({
+               "type" : 'get',
+               "url": "liebiao",
+               "dataType" : "json",
+               "success" : function(data) {
 
-        })
-    }
- /*
+                   var opts = "";
+                   for( var i = 0 ; i < data.length; i++ ){
 
+                       opts += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                   }
+   // 查询界面
+                   $("#addid").append(opts);
 
-    function showSel(){
-        $.ajax({
-            "type" : 'get',
-            "url": "liebiao",
-            "dataType" : "json",
-            "success" : function(data) {
-
-                var opts = "";
-                for( var i = 0 ; i < data.length; i++ ){
-
-                    opts += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
-                }
-// 查询界面
-                $("#addid").append(opts);
-
-            }
-        });
-    }*/
+               }
+           });
+       }*/
 
 
 
     function initTable() {
         $("#myTable").bootstrapTable({
-            url: "ww",
+            url: "findorderx",
             columns: [
                 {checkbox: true},
-                {field: 'id', title: '排序', align: 'center'},
-                {field: 'name', title: '广告分类名称', align: 'center'/*,formatter:function(value, rows, index) {
-                        var str="";
-                        str3=rows.goodsName;
-                        str1=rows.versionName;
-                        str2=rows.colorName;
-                        str+=str3+str2+str1;
-                        return str;
-                    }*/},
-                {field: 'description', title: '介绍', align: 'center'},
-                {field: 'createddate', title: '添加日期', align: 'center'},
+                {field: 'ordernum', title: '订单号', align: 'center'},
+                {field: 'createtime', title: '下单时间', align: 'center'},
+                {field: 'paymenttime', title: '付款时间', align: 'center'},
+                {field: 'paytype', title: '付款方式', align: 'center'},
                 {field: 'tool', title: '操作', align: 'center',
                     formatter: function (value, rows, index) {
                         var str = "";
-                       str += "<a href='javascript:deletePatientById(" + rows.id + ")'>删除&nbsp;&nbsp;</a>";
-                       str += "<button type='button' class='btn bg-olive btn-xs' data-toggle='modal' data-target='#editModal' onclick='javascript:xiugai(" + rows.id + ")'>查看</button>";
+                        str += "<button type='button' class='btn bg-olive btn-xs' data-toggle='modal' data-target='#editModal' onclick='javascript:chakan(" + rows.id + ")'>查看对应的商品</button>";
                         return str;
                     }
                 },

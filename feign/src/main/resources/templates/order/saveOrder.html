@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<div class="container-fluid">
+    <form id="movieForm">
+        <input style="display: none" name="id" id="id">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>收货人:</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="consignee" id="name" class="form-control" placeholder="请输入收货人名称">
+                </div>
+                <div class="col-md-2">
+                    <label>联系电话:</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="receivingtelephone" id="pho" class="form-control" placeholder="请输入联系电话">
+                </div>
+            </div>
+        </div>
+
+       <!-- <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>省:</label>
+                </div>
+                <div class="col-md-4">
+                    <select onchange="intiCity(this.value)" class="form-control" name="province" id="province"></select>
+                </div>
+                <div class="col-md-2">
+                    <label>市:</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" name="city" id="city"></select>
+                </div>
+            </div>
+        </div>-->
+       <!-- <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>类型:</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" name="typeid" id="typeid2"></select>
+                </div>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2"><label>收货地址:</label></div>
+                <div class="col-md-10">
+                    <textarea  name="receivingaddress" class="form-control" rows="5" cols="20" id="loc"></textarea>
+                </div>
+            </div>
+        </div>
+       <!-- <div class="form-group">
+            <div class="row">
+                <div class="col-md-2"><label>图片:</label></div>
+                <div class="col-md-10">
+                    &lt;!&ndash;隐藏域：往后台传值  &ndash;&gt;
+                    <input type="hidden" id="testimg" name="img" />
+                    &lt;!&ndash; projectfile &ndash;&gt;
+                    <input type="file" multiple class="projectfile" accept="image/*" name="img" id="uploadImg">
+                </div>
+            </div>
+        </div>-->
+    </form>
+</div>
+</body>
+</html>

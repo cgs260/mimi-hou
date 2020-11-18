@@ -2,6 +2,8 @@ package com.jk.service;
 
 
 import com.jk.entity.Adposition;
+import com.jk.entity.Goods;
+import com.jk.entity.Order;
 import com.jk.entity.Tcarouse;
 import com.jk.mapper.TcarMapper;
 import com.jk.pojo.PageResult;
@@ -84,6 +86,25 @@ public class TcarServicelmpl implements TcarService{
     @Override
     public Adposition ghuixian(Integer id) {
         return tcarMapper.ghuixian(id);
+    }
+
+
+
+    //查询订单号所对应的商品
+    @Override
+    public List<Order> findorder(Order order) {
+        return tcarMapper.findorder(order);
+    }
+
+    //查询商品表
+    @Override
+    public List<Goods> findgoods() {
+        return tcarMapper.findgoods();
+    }
+    //商品表回显
+    @Override
+    public Goods goodshui(Integer id) {
+        return tcarMapper.goodshui(id);
     }
 
 

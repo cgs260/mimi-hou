@@ -1,6 +1,8 @@
 package com.jk.service;
 
 import com.jk.entity.Adposition;
+import com.jk.entity.Goods;
+import com.jk.entity.Order;
 import com.jk.entity.Tcarouse;
 import com.jk.pojo.PageResult;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -52,4 +54,17 @@ public interface TcarService {
 
     @RequestMapping("/ghuixian")
     public Adposition ghuixian(@RequestParam Integer id);
+
+
+    //查询订单号所对应的商品
+    @RequestMapping("/findorder")
+    public List<Order> findorder(@RequestBody Order order);
+
+    //查询商品表
+    @RequestMapping("/findgoods")
+    public List<Goods> findgoods();
+
+    //商品表回显
+    @RequestMapping("/goodshui")
+    public Goods goodshui(@RequestParam Integer id);
 }

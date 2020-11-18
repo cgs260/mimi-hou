@@ -1,10 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <!-- 引入bootstap的css文件 -->
+    <link rel="stylesheet" href="../js/js/bootstrap3/css/bootstrap.css">
+    <link rel="stylesheet" href="../js/js/bootstrap3/css/bootstrap-theme.css">
+
+    <!-- 引入jquery文件 -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!-- 引入bootstrap的js文件 -->
+    <script type="text/javascript" src="../js/js/bootstrap3/js/bootstrap.min.js"></script>
+
+    <!-- 引入表格的css和js文件 -->
+    <link rel="stylesheet" href="../js/js/bootstrap-table/bootstrap-table.css">
+    <script src="../js/js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../js/js/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+
+    <!-- 引入弹框的js文件 -->
+    <script src="../js/js/bootstrap-bootbox/bootbox.js"></script>
+
+    <!-- 引入日期得css和js文件 -->
+    <script src="../js/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="../js/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+
+    <!-- 引入上传文件的css和js文件 -->
+    <script src="../js/js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <link rel="stylesheet" href="../js/js/bootstrap-fileinput/css/fileinput.css">
 </head>
 <body>
+<div id="toolbar">
+    <form class="form-inline">
+       <!-- <div class="form-group">
+            <label for="name">电影名：</label>
+            <input type="text" class="form-control" id="name" placeholder="请输入电影名">
+        </div>
+        <div class="form-group">
+            <label for="name">类型：</label>
+            <select class="form-control" id="typeid"></select>
+        </div>
+        <div class="form-group">
+            <label for="name">类型：</label>
+            <input type="text" id="startDate" class="form-control date">&#45;&#45;<input type="text" id="endDate" class="form-control date">
+        </div>-->
+        <div class="form-group">
+           <!-- <button type="button" onclick="searchMovie()" class="btn btn-default glyphicon glyphicon-search">搜索</button>-->
+            <!--<button type="button" onclick="javascript:toAddMovie()" class="btn btn-default glyphicon glyphicon-edit">新增</button>-->
+            <button type="button" onclick="javascript:allDelMovieById()" class="btn btn-danger glyphicon glyphicon-trash">批量删除</button>
+        </div>
 
+    </form>
+
+</div>
+<table class="table" id="movieTable"></table>
 </body>
+<script type="text/javascript">
+    //初始化加载
+    $(function(){
+        initMovieTable();
+        //类型下拉初始化
+       /* findType();*/
+
+        //初始化日期框
+        initDate();
+    })
+
+    //条件查询
+    function searchMovie(){
+        $("#movieTable").bootstrapTable("refresh");
+    }
+
+    //分页查询
+    function initMovieTable(){
+        $("#movieTable").bootstrapTable({
+            url:'../goods/findOrder',
+            toolbar:'#toolbar',
+            pagination:true, //是否展示分页
+            pageList:[3, 6, 9],//分页组件
+           /* pageNumber:1,
+            pageSize:3,//默认每页条数*/
+            sidePagination:'client',//分页方式：client客户端分页，server服务端分页
+            showRefresh:true,//是否显示刷新按钮
+            /*queryParams:function(){
+                return {
+                    page: this.pageNumber,
+                    rows: this.pageSize,
+                    name: $("#name").val(),
+                    typeid: $("#typeid").val(),
+                    startDate: $("#startDate").val(),
+                    endDate: $("#endDate").val()
+                }
+            },*/
+            columns:[
+                {checkbox:true},
+                {field:'userid',title:'用户id',align:'center',width:80},
+                /*{field:'img',title:'图片',align:'center',width:80,formatter:function(value,rows,index){
+                        return "<img width='50px',height='50px' src='"+value+"'/>";
+                    }},*/
+                {field:'ordernum',title:'订单编号',align:'center',width:80},
+                {field:'ordersumprice',title:'订单总价',align:'center',width:80},
+                {field:'orderstatus',title:'状态',align:'center',width:80},
+                {field:'receivingaddress',title:'收货地址',align:'center',width:80},
+                /*{field:'areaname',title:'地区',align:'center',width:80,formatter:function(value,rows,index){
+                        return rows.shengname+"-"+rows.shiname;
+                    }},*/
+                {field:'receivingtelephone',title:'联系电话',align:'center',width:80},
+                {field:'consignee',title:'收货人',align:'center',width:80},
+                {field:'createtime',title:'订单创建时间',align:'center',width:80},
+                {field:'serialnumber',title:'交易号',align:'center',width:80},
+                {field:'paytype',title:'支付方式',align:'center',width:80},
+                {field:'paymenttime',title:'支付时间',align:'center',width:80},
+                {field:'sendtime',title:'发货时间',align:'center',width:80},
+                {field:'closingtime',title:'成交时间',align:'center',width:80},
+
+
+                {field:'caozuo',title:'操作',align:'center',width:80,formatter:function(value,rows,index){
+                        var str = "";
+                        str+="<input class='btn btn-danger' type='submit' value='删除' onclick='delMovieById("+rows.id+")'>";
+                        str+="<input class='btn btn-success' type='submit' value='修改' onclick='findMovieById("+rows.id+")'>";
+                        return str;
+                    }},
+            ]
+        })
+    }
+
+    //删除
+    function delMovieById(id){
+        $.ajax({
+            url:'../goods/delOrderById',//后台请求地址
+            type:'get',
+            data:{id:id},
+            success:function(){
+                searchMovie()
+            }
+        });
+    }
+
+    //批量删除
+    function allDelMovieById(){
+        var arr = $('#movieTable').bootstrapTable('getSelections');
+        if (arr.length<=0) {
+            bootbox.alert({
+                size: "small",
+                title: "TOM对你的提示",
+                message: "请最少选择一条数据！",
+                callback: function(){}
+            });
+            return;
+        }
+        bootbox.confirm({
+            size: "small",
+            title: "TOM对你的提示",
+            message: "你确定要删除这些数据吗？",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result){
+                if (result) {
+                    for ( var i in arr) {
+                        delMovieById(arr[i].id);
+                    }
+                }
+            }
+        })
+
+    }
+
+    //类型下拉查询
+    function findType(){
+        $.ajax({
+            url:'<%=request.getContextPath()%>/movie/findType.do',//后台请求地址
+            type:'get',
+            success:function(data){
+                //拼接下拉列表的字符串
+                var str = "<option value=''>请选择</option>";
+                for(var i=0;i<data.length;i++){
+                    str += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                }
+                $("#typeid").html(str);
+                $("#typeid2").html(str);
+            }
+        });
+    }
+
+    //回显修改
+    function findMovieById(id){
+        $.ajax({
+            url:"../goods/findOrderById",
+            type:"get",
+            data:{id:id},
+            success:function(data){
+
+                bootbox.dialog({
+                    size: "large",
+                    title:"修改页面",
+                    message: createAddContent('../order/toSaveOrder'),
+                    closeButton:true,
+                    buttons:{
+                        "success":{
+                            "label":"<i class='icon-ok'></i>保存",
+                            "className":"btn-sm btn-success",
+                            "callback":function(){
+                                $.ajax({
+                                    url:"../goods/saveOrder",
+                                    type:"post",
+                                    data:$("#movieForm").serialize(),
+                                    success:function(){
+                                        //条件查询方法   刷新表格
+                                        searchMovie();
+                                    }
+                                })
+                            }
+                        },
+                        "cancel":{
+                            "label":"<i class='icon-info'></i>取消",
+                            "className":"btn-sm btn-danger",
+                            "callback":function(){
+
+                            }
+                        }
+                    }
+                });
+                alert(data);
+                $("#id").val(id);
+                alert(data.consignee);
+                $("#name").val(data.consignee);
+                alert(data.receivingaddress);
+                $("#pho").val(data.receivingtelephone);
+                $("#loc").val(data.receivingaddress);
+
+                /*//文件上传
+                uploadFile();
+                //类型下拉
+                findType();
+                //地区二级联动
+                initPro();*/
+                //初始化日期框
+                initDate();
+            }
+        })
+    }
+
+   /* //打开新增页面
+    function toAddMovie(){
+        bootbox.dialog({
+            size: "large",
+            title:"新增页面",
+            message: createAddContent('../order/toSaveOrder'),
+            closeButton:true,
+            buttons:{
+                "success":{
+                    "label":"<i class='icon-ok'></i>保存",
+                    "className":"btn-sm btn-success",
+                    "callback":function(){
+                        $.ajax({
+                            url:"../goods/saveOrder",
+                            type:"post",
+                            data:$("#movieForm").serialize(),
+                            success:function(){
+                                //条件查询方法   刷新表格
+                                searchMovie();
+                            }
+                        })
+                    }
+                },
+                "cancel":{
+                    "label":"<i class='icon-info'></i>取消",
+                    "className":"btn-sm btn-danger",
+                    "callback":function(){
+
+                    }
+                }
+            }
+        });
+
+        //文件上传
+        uploadFile();
+        //类型下拉
+       /!* findType();
+        //地区二级联动
+        initPro();*!/
+        //初始化日期框
+        initDate();
+    }
+*/
+    var res;
+    function createAddContent(url){
+        $.ajax({
+            url:url,
+            async:false,//同步
+            success:function(data){
+                res = data;
+            }
+        });
+        return res;
+    }
+
+  /*  //初始化省的数据
+    function initPro(){
+        $.ajax({
+            url:'<%=request.getContextPath()%>/movie/queryArea.do',//后台请求地址
+            type:'get',
+            data:{pid:0},
+            success:function(data){
+                //拼接下拉列表的字符串
+                var str = "<option value='-1'>请选择</option>";
+                for(var i=0;i<data.length;i++){
+                    str += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                }
+                $("#province").html(str);
+            }
+        });
+    }
+
+    //加载市的数据
+    function intiCity(pid){
+        $.ajax({
+            url:'<%=request.getContextPath()%>/movie/queryArea.do',//后台请求地址
+            type:'get',
+            data:{pid:pid},
+            success:function(data){
+                //拼接下拉列表的字符串
+                var str = "<option value='-1'>请选择</option>";
+                for(var i=0;i<data.length;i++){
+                    str += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                }
+                $("#city").html(str);
+            }
+        });
+    }
+
+*/
+
+
+
+    function initDate(){
+        $('.date').datetimepicker({
+            language: 'zh-CN',//显示中文
+            //format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+            format: 'yyyy-mm-dd',//显示格式
+            minView: "month",//设置只显示到月份
+            initialDate: new Date(),//初始化当前日期
+            autoclose: true,//选中自动关闭
+            todayBtn: true//显示今日按钮
+        });
+    }
+
+
+    //上传文件
+    function uploadFile(){
+        $('#uploadImg').fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: '../goods/uploadImg', //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 2, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+
+        }).on('fileuploaded', function(event, data, previewId, index) {
+            //var imgval = $('#testimg').val();
+            //if(imgval == null || imgval == "" || imgval == undefined){
+            var	imgval = "http://<%= request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/"+data.response;
+            //}else{
+            //	imgval += ","+"http://<%= request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/"+data.response;
+            //}
+            $('#testimg').val(imgval);
+        });
+    }
+
+</script>
 </html>

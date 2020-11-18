@@ -2,6 +2,8 @@ package com.jk.controller;
 
 
 import com.jk.entity.Adposition;
+import com.jk.entity.Goods;
+import com.jk.entity.Order;
 import com.jk.entity.Tcarouse;
 import com.jk.pojo.PageResult;
 import com.jk.service.TcarService;
@@ -27,7 +29,7 @@ public class TcarController {
           return tcarService.guang(tcarouse);
      }
 
-     //查询广告类型表
+     //查询广告
      @RequestMapping("/danbiao")
      public List<Adposition> danbiao(){
           return tcarService.danbiao();
@@ -70,6 +72,25 @@ public class TcarController {
      public Adposition ghuixian(@RequestParam Integer id){
           return tcarService.ghuixian(id);
      }
+
+
+
+     //查询订单号所对应的商品
+     @RequestMapping("/findorder")
+     public List<Order> findorder(@RequestBody Order order){
+          return tcarService.findorder(order);
+     }
+     //查询商品表
+     @RequestMapping("/findgoods")
+     public List<Goods> findgoods(){
+          return tcarService.findgoods();
+     }
+     //商品表回显
+     @RequestMapping("/goodshui")
+     public Goods goodshui(@RequestParam Integer id){
+          return tcarService.goodshui(id);
+     }
+
 
 
 
