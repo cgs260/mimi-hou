@@ -57,21 +57,21 @@
 
                         </tr>
 
-                        <tr>
+                        <!--<tr>
                             <td>图片</td>
-                            <!--<td>图片：<input type="file" name="images" /><br/>
+                            &lt;!&ndash;<td>图片：<input type="file" name="images" /><br/>
 
                                 <input type="submit" value="上传" />
-                            </td>-->
+                            </td>&ndash;&gt;
                             <td><img id="add_img" width="100px" height="100px"/>
-                                <!-- 文件域 -->
+                                &lt;!&ndash; 文件域 &ndash;&gt;
                                 <input type="file" id="uploadImg"/>
-                                <!-- 隐藏域：用于向后台传值，上传的文件新名称 -->
+                                &lt;!&ndash; 隐藏域：用于向后台传值，上传的文件新名称 &ndash;&gt;
                                 <input id="hideImg" name="images" style="display:none"/><br>
-                                <!-- 显示进度条的div -->
+                                &lt;!&ndash; 显示进度条的div &ndash;&gt;
                                 <div id="fileQueue"></div>
                             </td>
-                        </tr>
+                        </tr>-->
 
                         <!--<tr>
                               <td>时间</td>
@@ -125,10 +125,10 @@
                         str+=str3+str2+str1;
                         return str;
                     }*/},
-                {field: 'images', title: '浏览', align: 'center', width: 150,formatter:function(value, rows, index) {
+                /*{field: 'images', title: '浏览', align: 'center', width: 150,formatter:function(value, rows, index) {
                         return "<img style='width:50px;height:50px' src='/upload/"+value+"'>";
                     }},
-
+*/
                 {field: 'createTime', title: '添加日期', align: 'center'},
                 {field: 'updateTime', title: '修改日期', align: 'center'},
                 {field: 'status', title: '状态', align: 'center',formatter:function(value, rows, index) {

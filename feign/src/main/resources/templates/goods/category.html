@@ -164,7 +164,8 @@
     function searchMemberRankList() {
         $.ajax({
             type:"post",
-            url:"../goods/findCategory",
+            /*url:"../goods/findCategory",*/
+            url:"/goods/findCategory",
             data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"parentId":vm.parentId},
             dataType:"json",
             success: function(result) {
